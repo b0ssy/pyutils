@@ -1,6 +1,8 @@
+from optparse import Option
 import os
 import sys
 import logging
+from typing import Optional, Union
 
 import smtplib
 from email.mime.multipart import MIMEMultipart
@@ -14,7 +16,7 @@ class SMTPClient:
         port: int,
         username: str,
         password: str,
-        alias: str | None,
+        alias: Optional[str],
     ):
         """
         A simple and convenient SMTP client
@@ -62,7 +64,7 @@ class SMTPClient:
     def send_tls(
         self,
         msg: MIMEMultipart,
-        recipient_emails: str | list[str],
+        recipient_emails: Union[str, list[str]],
     ) -> None:
         """
         Send email using TLS connection
@@ -87,7 +89,7 @@ class SMTPClient:
 
 def configure_logs(
     filename="logs/log",
-    min_level=logging.DEBUG,
+    min_level=logging.INFO,
     print_stdout=True,
     log_format="%(asctime)s.%(msecs)03d [%(name)-12.12s] [%(levelname)-7.7s]  %(message)s",
     datefmt="%Y-%m-%d %H:%M:%S",
